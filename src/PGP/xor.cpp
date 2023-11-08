@@ -21,7 +21,7 @@ std::string PGP::my_xor(std::string message, Args options)
         size = key.size();
     }
     for (size_t i = 0; i < size; i++) {
-        result += message[i] ^ key[i % (key.size() - 1)];
+        result += message[i] ^ key[i % key.size()];
     }
     return toHex(result);
 }
