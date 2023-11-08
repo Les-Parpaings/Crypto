@@ -15,12 +15,12 @@ std::string PGP::my_xor(std::string message, Args options)
     std::string result;
     std::string key = options.getKey();
     key = parseMessage(key);
-    int size = message.size();
+    size_t size = message.size();
 
     if (options.getBlock()) {
         size = key.size();
     }
-    for (std::size_t i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         result += message[i] ^ key[i % (key.size() - 1)];
     }
     return toHex(result);
@@ -28,7 +28,7 @@ std::string PGP::my_xor(std::string message, Args options)
 
 std::string PGP::xor_decrypt(std::string message, Args options)
 {
-    return std::string("todo");
+    return my_xor(message, options);
 }
 
 }
