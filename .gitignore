@@ -1,0 +1,14 @@
+# Binary
+mypgp
+
+# Object files
+*.o
+
+# Output files debug
+output*
+
+# txt files
+*.txt
+
+# Vscode
+.vscode
