@@ -15,6 +15,7 @@ namespace PGP
             XOR,
             RSA,
             AES,
+            SIZE,
         };
     }
 

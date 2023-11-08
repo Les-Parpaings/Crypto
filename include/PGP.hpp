@@ -8,5 +8,36 @@
 #pragma once
 
 #include <iostream>
+#include <array>
 
-std::string readMessage(std::istream& stream);
+#include "enum.hpp"
+#include "Args.hpp"
+
+namespace PGP
+{
+    class PGP {
+        public:
+            PGP();
+            ~PGP();
+
+            std::string run(std::string message, Args options);
+
+            std::string my_xor(std::string message, Args options);
+            std::string xor_decrypt(std::string message, Args options);
+
+            std::string rsa(std::string message, Args options);
+            std::string rsa_decrypt(std::string message, Args options);
+
+            std::string aes(std::string message, Args options);
+            std::string aes_decrypt(std::string message, Args options);
+
+            std::string toHex(std::string message);
+
+        private:
+            std::array<std::string(PGP::PGP::*)(std::string, Args), Algorithm::SIZE> _encrypt;
+            std::array<std::string(PGP::PGP::*)(std::string, Args), Algorithm::SIZE> _decrypt;
+    };
+
+    std::string readMessage(std::istream& stream);
+    std::string parseMessage(std::string message);
+}

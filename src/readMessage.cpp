@@ -7,6 +7,9 @@
 
 #include <iostream>
 
+namespace PGP
+{
+
 std::string readMessage(std::istream& stream)
 {
     std::string message;
@@ -17,3 +20,5 @@ std::string readMessage(std::istream& stream)
     }
     return message;
 }
+
+} // namespace PGP

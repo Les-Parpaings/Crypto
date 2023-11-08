@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
 
     PGP::Args args;
     try {
-        args.parse(argv);
+        args.parse(argc, argv);
     } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
         return 84;
@@ -22,6 +22,9 @@ int main(int argc, char* argv[]) {
         args.printHelp();
         return 0;
     }
-    std::string message = readMessage(std::cin);
+    std::string message = PGP::readMessage(std::cin);
+    message = PGP::parseMessage(message);
+    PGP::PGP pgp;
+    std::cout << pgp.run(message, args) << std::endl;
     return 0;
 }
