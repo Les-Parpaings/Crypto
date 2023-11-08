@@ -6,6 +6,7 @@
 */
 
 #include "enum.hpp"
+#include <string>
 
 #pragma once
 
@@ -17,11 +18,13 @@ class Args {
         Args();
         ~Args();
 
-        void parse(char* argv[]);
+        void parse(int argc, char* argv[]);
 
         Mode::Mode getMode() const { return _mode; }
         Algorithm::Algorithm getAlgorithm() const { return _algorithm; }
         bool getHelp() const { return _help; }
+        bool getBlock() const { return _block; }
+        std::string getKey() const { return _key; }
 
         void printHelp() const;
 
@@ -30,7 +33,8 @@ class Args {
         Mode::Mode _mode;
         Algorithm::Algorithm _algorithm;
         bool _help;
-
+        bool _block;
+        std::string _key;
 };
 
 } // namespace PGP

@@ -6,8 +6,10 @@
 */
 
 #include "Args.hpp"
+
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 
 namespace PGP
 {
@@ -17,6 +19,8 @@ Args::Args()
     _mode = Mode::NONE;
     _algorithm = Algorithm::NONE;
     _help = false;
+    _block = false;
+    _key = "";
 }
 
 Args::~Args()
@@ -24,34 +28,55 @@ Args::~Args()
 
 }
 
-void Args::parse(char* argv[])
+void Args::parse(int argc, char* argv[])
 {
-    for (int i = 0; argv[i] != NULL; i++) {
-        std::string arg = argv[i];
+    std::vector<std::string> args;
+
+    for (int i = 1; i < argc; i++) {
+        args.push_back(argv[i]);
+    }
+
+    for (auto it = args.begin(); it != args.end(); it++) {
+        std::string arg = *it;
         if (arg == "-h" || arg == "--help") {
             _help = true;
             return;
         }
         if (arg == "-xor" && _algorithm == Algorithm::Algorithm::NONE) {
             _algorithm = Algorithm::XOR;
+            it = args.erase(it).operator--();
         }
         if (arg == "-rsa" && _algorithm == Algorithm::Algorithm::NONE) {
             _algorithm = Algorithm::RSA;
+            it = args.erase(it).operator--();
         }
         if (arg == "-aes" && _algorithm == Algorithm::Algorithm::NONE) {
             _algorithm = Algorithm::AES;
+            it = args.erase(it).operator--();
         }
         if (arg == "-c" && _mode == Mode::Mode::NONE) {
             _mode = Mode::ENCRYPT;
+            it = args.erase(it).operator--();
         }
         if (arg == "-d" && _mode == Mode::Mode::NONE) {
             _mode = Mode::DECRYPT;
+            it = args.erase(it).operator--();
+        }
+        if (arg == "-b" && _block == false) {
+            _block = true;
+            it = args.erase(it).operator--();
         }
     }
     if (_help)
         return;
     if (_mode == Mode::NONE || _algorithm == Algorithm::NONE)
         throw std::runtime_error("Invalid arguments");
+    if (_block && (_algorithm != Algorithm::XOR && _algorithm != Algorithm::AES))
+        throw std::runtime_error("Invalid arguments");
+    if (args.empty()) {
+        throw std::runtime_error("Invalid arguments");
+    }
+    _key = args.front();
 }
 
 void Args::printHelp() const
