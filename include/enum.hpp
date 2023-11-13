@@ -24,6 +24,7 @@ namespace PGP
             NONE = -1,
             ENCRYPT,
             DECRYPT,
+            GEN_RSA_KEY,
         };
     }
 } // namespace PGP

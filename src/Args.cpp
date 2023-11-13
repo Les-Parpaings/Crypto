@@ -20,6 +20,8 @@ Args::Args()
     _algorithm = Algorithm::NONE;
     _help = false;
     _block = false;
+    _p = 0;
+    _q = 0;
     _key = "";
 }
 
@@ -62,8 +64,12 @@ void Args::parse(int argc, char* argv[])
             _mode = Mode::DECRYPT;
             it = args.erase(it).operator--();
         }
-        if (arg == "-b" && _block == false) {
+        if (arg == "-b" && !_block) {
             _block = true;
+            it = args.erase(it).operator--();
+        }
+        if (arg == "-g" && _mode == Mode::Mode::NONE) {
+            _mode = Mode::GEN_RSA_KEY;
             it = args.erase(it).operator--();
         }
     }
@@ -75,6 +81,14 @@ void Args::parse(int argc, char* argv[])
         throw std::runtime_error("Invalid arguments");
     if (args.empty()) {
         throw std::runtime_error("Invalid arguments");
+    }
+    if (_mode == Mode::GEN_RSA_KEY && _algorithm != Algorithm::RSA) {
+        throw std::runtime_error("Invalid arguments");
+    }
+    if (_mode == Mode::GEN_RSA_KEY) {
+        if (args.size() < 2)
+            throw std::runtime_error("Invalid arguments");
+        return;
     }
     _key = args.front();
 }
