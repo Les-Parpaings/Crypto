@@ -19,6 +19,8 @@ BIN			:=		$(BINDIR)/$(BINNAME)
 SRCDIR		:=		src
 SRCEXT		:=		cpp
 SRC			:=		$(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
+SRCNOMAIN	:=		$(shell find $(SRCDIR) -type f -name *.$(SRCEXT) \
+					\( ! -name main.$(SRCEXT) \))
 
 # Objects
 OBJDIR		:=		obj
@@ -97,7 +99,7 @@ re:	fclean all
 
 # Compile and run tests
 tests_run:	re
-	$(CXX) $(FLAGS) $(INC) -o $(TESTBIN) $(SRC) $(TESTSRC) $(LIB) $(TESTLIB)
+	$(CXX) $(FLAGS) $(INC) -o $(TESTBIN) $(SRCNOMAIN) $(TESTSRC) $(LIB) $(TESTLIB)
 	./$(TESTBIN)
 
 gcovr:		tests_run
