@@ -16,6 +16,7 @@ namespace PGP
     {
         public:
             uInt512();
+            uInt512(const int value);
             uInt512(const uInt512& other);
             ~uInt512();
 

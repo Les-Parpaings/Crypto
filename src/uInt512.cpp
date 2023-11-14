@@ -16,14 +16,18 @@ uInt512::uInt512()
     _bits = std::bitset<512>(0);
 }
 
-uInt512::~uInt512()
+uInt512::uInt512(const int value)
 {
-
+    _bits = value;
 }
 
 uInt512::uInt512(const uInt512& other)
 {
     _bits = other._bits;
+}
+
+uInt512::~uInt512()
+{
 }
 
 uInt512 uInt512::operator+(const uInt512& other)
@@ -181,11 +185,8 @@ uInt512 uInt512::operator/(const uInt512& other)
         throw std::runtime_error("Division by zero");
     }
 
-    uInt512 quotient;
-    uInt512 remainder;
-
-    quotient = 0;
-    remainder = *this;
+    uInt512 quotient = 0;
+    uInt512 remainder = *this;
 
     std::cout << "panic: " << remainder << std::endl;
 
