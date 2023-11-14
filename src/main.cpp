@@ -28,6 +28,7 @@ int main(int argc, char* argv[])
 
     std::string message = PGP::readMessage(std::cin);
     message = PGP::parseMessage(message);
+
     PGP::PGP pgp;
     std::cout << pgp.run(message, args) << std::endl;
     return 0;
