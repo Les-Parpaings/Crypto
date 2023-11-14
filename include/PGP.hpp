@@ -31,11 +31,16 @@ namespace PGP
             std::string aes(std::string message, Args options);
             std::string aes_decrypt(std::string message, Args options);
 
+            std::string pgp(std::string message, Args options);
+            std::string pgp_decrypt(std::string message, Args options);
+
             std::string toHex(std::string message);
 
+            typedef std::string (PGP::PGP::*FuncPGP)(std::string, Args);
+
         private:
-            std::array<std::string(PGP::PGP::*)(std::string, Args), Algorithm::SIZE> _encrypt;
-            std::array<std::string(PGP::PGP::*)(std::string, Args), Algorithm::SIZE> _decrypt;
+            std::array<FuncPGP, Algorithm::SIZE> _encrypt;
+            std::array<FuncPGP, Algorithm::SIZE> _decrypt;
     };
 
     std::string readMessage(std::istream& stream);

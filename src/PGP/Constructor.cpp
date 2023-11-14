@@ -16,9 +16,11 @@ PGP::PGP()
     _encrypt[Algorithm::XOR] = &PGP::my_xor;
     _encrypt[Algorithm::RSA] = &PGP::rsa;
     _encrypt[Algorithm::AES] = &PGP::aes;
+    _encrypt[Algorithm::PGP] = &PGP::pgp;
     _decrypt[Algorithm::XOR] = &PGP::xor_decrypt;
     _decrypt[Algorithm::RSA] = &PGP::rsa_decrypt;
     _decrypt[Algorithm::AES] = &PGP::aes_decrypt;
+    _decrypt[Algorithm::PGP] = &PGP::pgp_decrypt;
 }
 
 PGP::~PGP()
@@ -28,7 +30,7 @@ PGP::~PGP()
 
 std::string PGP::run(std::string message, Args options)
 {
-    if (options.getMode() == Mode::ENCRYPT)
+    if (options.getMode() == Mode::ENCRYPT || options.getMode() == Mode::GEN_RSA_KEY)
         return (this->*_encrypt[options.getAlgorithm()])(message, options);
     return (this->*_decrypt[options.getAlgorithm()])(message, options);
 }

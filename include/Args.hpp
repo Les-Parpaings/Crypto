@@ -5,8 +5,11 @@
 ** Args
 */
 
-#include "enum.hpp"
+#include <iostream>
 #include <string>
+
+#include "enum.hpp"
+#include "uInt512.hpp"
 
 #pragma once
 
@@ -26,8 +29,10 @@ class Args {
         Algorithm::Algorithm getAlgorithm() const       { return _algorithm; }
         bool getHelp() const                            { return _help; }
         bool getBlock() const                           { return _block; }
-        int getP() const                                { return _p; }
-        int getQ() const                                { return _q; }
+        uInt512 getP() const                            { return _p; }
+        uInt512 getQ() const                            { return _q; }
+        void setP(uInt512 p)                            { _p = p; }
+        void setQ(uInt512 q)                            { _q = q; }
         std::string getKey() const                      { return _key; }
 
         void printHelp() const;
@@ -38,8 +43,8 @@ class Args {
         Algorithm::Algorithm _algorithm;
         bool _help;
         bool _block;
-        int _p;
-        int _q;
+        uInt512 _p;
+        uInt512 _q;
         std::string _key;
 };
 

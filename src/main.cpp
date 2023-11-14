@@ -7,7 +7,6 @@
 
 #include "Args.hpp"
 #include "PGP.hpp"
-#include "uInt512.hpp"
 #include <stdexcept>
 
 int main(int argc, char* argv[])
@@ -26,8 +25,11 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    std::string message = PGP::readMessage(std::cin);
-    message = PGP::parseMessage(message);
+    std::string message;
+    if (args.getAlgorithm() != PGP::Algorithm::RSA && args.getMode() != PGP::Mode::GEN_RSA_KEY) {
+        message =  PGP::readMessage(std::cin);
+        message = PGP::parseMessage(message);
+    }
 
     PGP::PGP pgp;
     std::cout << pgp.run(message, args) << std::endl;

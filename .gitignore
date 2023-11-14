@@ -1,5 +1,6 @@
 # Binary
 mypgp
+unit_tests
 
 # Object files
 *.o
@@ -12,3 +13,8 @@ output*
 
 # Vscode
 .vscode
+
+# Caca
+ciphered
+message
+1050a92515d65555d450eb456821e981
