@@ -22,8 +22,11 @@ int main(int argc, char* argv[])
         args.printHelp();
         return 0;
     }
-    std::string message = PGP::readMessage(std::cin);
-    message = PGP::parseMessage(message);
+    std::string message;
+    if (args.getAlgorithm() != PGP::Algorithm::RSA && args.getMode() != PGP::Mode::GEN_RSA_KEY) {
+        message =  PGP::readMessage(std::cin);
+        message = PGP::parseMessage(message);
+    }
     PGP::PGP pgp;
     std::cout << pgp.run(message, args) << std::endl;
     return 0;

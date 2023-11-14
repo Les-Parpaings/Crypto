@@ -28,7 +28,7 @@ PGP::~PGP()
 
 std::string PGP::run(std::string message, Args options)
 {
-    if (options.getMode() == Mode::ENCRYPT)
+    if (options.getMode() == Mode::ENCRYPT || options.getMode() == Mode::GEN_RSA_KEY)
         return (this->*_encrypt[options.getAlgorithm()])(message, options);
     return (this->*_decrypt[options.getAlgorithm()])(message, options);
 }

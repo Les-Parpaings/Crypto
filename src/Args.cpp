@@ -6,6 +6,7 @@
 */
 
 #include "Args.hpp"
+#include "PGP.hpp"
 
 #include <iostream>
 #include <stdexcept>
@@ -88,6 +89,8 @@ void Args::parse(int argc, char* argv[])
     if (_mode == Mode::GEN_RSA_KEY) {
         if (args.size() < 2)
             throw std::runtime_error("Invalid arguments");
+        _q = uInt512::fromHexLittleEndian(parseMessage(args[0]));
+        _p = uInt512::fromHexLittleEndian(parseMessage(args[1]));
         return;
     }
     _key = args.front();

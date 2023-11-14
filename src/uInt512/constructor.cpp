@@ -42,4 +42,9 @@ uInt512::uInt512(const char *other)
     _bits = std::bitset<512>(tmp);
 }
 
+uInt512::uInt512(const std::bitset<512> &other)
+{
+    _bits = other;
+}
+
 }

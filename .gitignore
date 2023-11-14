@@ -1,6 +1,6 @@
 # Binary
 mypgp
-unit_test
+unit_tests
 
 # Object files
 *.o

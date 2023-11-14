@@ -57,11 +57,8 @@ uInt512 uInt512::operator-(const uInt512& other)
 
 uInt512 uInt512::operator-(const int& other)
 {
-    uInt512 res;
-    uInt512 tmp;
-    tmp = other;
-    res = other;
-    res = *this - tmp;
+    uInt512 tmp = other;
+    uInt512 res = *this - tmp;
     return res;
 }
 
@@ -90,16 +87,52 @@ static int topBitSet(const std::bitset<512> &a) {
     return i;
 }
 
+static std::bitset<512> gf2Sub(std::bitset<512> a, std::bitset<512> b)
+{
+    std::bitset<512> res;
+    bool borrow = false;
+
+    for (int i = 0; i < 512; i++) {
+        bool bit1 = a[i];
+        bool bit2 = b[i];
+
+        bool diff = bit1 ^ bit2 ^ borrow;
+
+        borrow = (!bit1 & bit2) | ((!bit1 | bit2) & borrow);
+
+        res[i] = diff;
+    }
+
+    return res;
+}
+
+static bool gf2IsLower(const std::bitset<512> &a, const std::bitset<512> &b)
+{
+    for (int i = 511; i >= 0; i--) {
+        if (a[i] != b[i]) {
+            return (a[i] < b[i]);
+        }
+    }
+    return false;
+}
+
 static std::bitset<512> gf2Div(std::bitset<512> dividend, std::bitset<512> divisor, std::bitset<512> &remainder) {
     std::bitset<512> quotient(0);
     int divisorSize = topBitSet(divisor);
+
     if (divisorSize < 0) {
         throw std::runtime_error("Division by zero");
     }
     int bit;
     while ((bit = topBitSet(dividend)) >= divisorSize) {
+        if (gf2IsLower(dividend, (divisor << (bit - divisorSize)))) {
+            if (bit == divisorSize) {
+                break;
+            }
+            bit--;
+        }
         quotient.set(bit - divisorSize);
-        dividend ^= divisor << (bit - divisorSize);
+        dividend = gf2Sub(dividend, (divisor << (bit - divisorSize)));
     }
     remainder = dividend;
     return quotient;
