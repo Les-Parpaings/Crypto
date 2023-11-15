@@ -58,6 +58,10 @@ void Args::parse(int argc, char* argv[])
             _algorithm = Algorithm::AES;
             it = args.erase(it).operator--();
         }
+        if (arg == "-pgp" && _algorithm == Algorithm::Algorithm::NONE) {
+            _algorithm = Algorithm::PGP;
+            it = args.erase(it).operator--();
+        }
         if (arg == "-c" && _mode == Mode::Mode::NONE) {
             _mode = Mode::ENCRYPT;
             it = args.erase(it).operator--();

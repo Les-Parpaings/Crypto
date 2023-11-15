@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2023
 ** Crypto
 ** File description:
-** aes
+** pgp
 */
 
 #include "PGP.hpp"
