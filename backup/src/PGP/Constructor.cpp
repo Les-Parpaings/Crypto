@@ -41,9 +41,10 @@ std::string PGP::toHex(std::string message)
     std::stringstream stream;
 
     for (std::size_t i = 0; i < message.size(); i++) {
-        if (message[i] < 16)
+        if (static_cast<unsigned int>(message[i]) < 16)
             stream << "0";
-        stream << std::hex << (int)message[i];
+        std::bitset<8> x(message[i]);
+        stream << std::hex << x.to_ulong();
         result += stream.str();
         stream.str("");
     }

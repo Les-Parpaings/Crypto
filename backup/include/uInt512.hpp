@@ -24,6 +24,9 @@ namespace PGP
             ~uInt512();
 
             static uInt512 fromHexLittleEndian(const std::string &other);
+            static uInt512 fromHex(const std::string &other);
+            std::string toHex() const;
+            std::string toHexLittleEndian() const;
 
             uInt512 operator+(const uInt512& other);
             uInt512 operator+(const int& other);
