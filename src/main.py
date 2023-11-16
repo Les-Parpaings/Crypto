@@ -1,5 +1,4 @@
-
-from src.args import Args,
+from src.args import Args
 
 def main():
     args = Args()
@@ -13,5 +12,3 @@ def main():
     if (args.help):
         args.printHelp()
         return 0
-
-    if (args.algo == )
