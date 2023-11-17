@@ -1,7 +1,10 @@
 from src.args import Args, Algorithm, Mode
 from src.xor import xor
+from src.aes.logic import encrypt as aesEncrypt
+from src.aes.logic import encrypt as aesDecrypt
 from src.rsa.logic import encrypt as rsaEncrypt
 from src.rsa.logic import decrypt as rsaDecrypt
+from src.aes.key import Key, genereateAllKeys
 
 def main():
     args = Args()
@@ -20,10 +23,9 @@ def main():
     if (args.mode != Mode.GEN_RSA_KEY):
         message = bytes.fromhex(input())
 
-    functionTableEncrypt = [xor, rsaEncrypt]
-    functionTableDecrypt = [xor, rsaDecrypt]
+    functionTableEncrypt = [xor, rsaEncrypt, aesEncrypt]
+    functionTableDecrypt = [xor, rsaDecrypt, aesDecrypt]
     if (args.mode == Mode.ENCRYPT or args.mode == Mode.GEN_RSA_KEY):
         message = functionTableEncrypt[args.algo.value](message, args)
     else:
         message = functionTableDecrypt[args.algo.value](message, args)
-    print(message)
