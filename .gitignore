@@ -2,9 +2,13 @@
 .vscode
 
 # Caca
-ciphered*
-message*
-key*
+ciphered
+message
+messageBS
+key
 
 # Python
 *.pyc
+
+test.py
+_oui.py
