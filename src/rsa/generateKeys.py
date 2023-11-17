@@ -14,7 +14,7 @@ def calculateD(e, lambdaVar):
         k += 1
     return d
 
-def genRsaKey(p, q):
+def genRsaKeys(p, q):
     n = p * q
     phi = (p - 1) * (q - 1)
     lambdaVar = phi // gcd(p - 1, q - 1)
