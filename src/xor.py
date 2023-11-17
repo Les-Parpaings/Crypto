@@ -3,7 +3,7 @@ def xor(message, args):
     result = []
     size = len(message)
     if (args.block):
-        size = len(args.key)
+        size = len(key)
     for i in range(size):
-        result.append(message[i] ^ args.key[i % len(args.key)])
+        result.append(message[i] ^ key[i % len(key)])
     return bytes(result).hex()
