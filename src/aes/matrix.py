@@ -143,18 +143,20 @@ class Matrix:
     def doMixColumns(self) -> None:
         for i in range(4):
             word = self.matrix[i].copy()
-            self.matrix[i][0] = doMulti(word[0], 2) ^ doMulti(word[1], 3) ^ doMulti(word[2], 1) ^ doMulti(word[3], 1)
-            self.matrix[i][1] = doMulti(word[0], 1) ^ doMulti(word[1], 2) ^ doMulti(word[2], 3) ^ doMulti(word[3], 1)
-            self.matrix[i][2] = doMulti(word[0], 1) ^ doMulti(word[1], 1) ^ doMulti(word[2], 2) ^ doMulti(word[3], 3)
-            self.matrix[i][3] = doMulti(word[0], 3) ^ doMulti(word[1], 1) ^ doMulti(word[2], 1) ^ doMulti(word[3], 2)
+            self.matrix[i][0] = galoisMulti(word[0], 0x02) ^ galoisMulti(word[1], 0x03) ^ galoisMulti(word[2], 0x01) ^ galoisMulti(word[3], 0x01)
+            self.matrix[i][1] = galoisMulti(word[0], 0x01) ^ galoisMulti(word[1], 0x02) ^ galoisMulti(word[2], 0x03) ^ galoisMulti(word[3], 0x01)
+            self.matrix[i][2] = galoisMulti(word[0], 0x01) ^ galoisMulti(word[1], 0x01) ^ galoisMulti(word[2], 0x02) ^ galoisMulti(word[3], 0x03)
+            self.matrix[i][3] = galoisMulti(word[0], 0x03) ^ galoisMulti(word[1], 0x01) ^ galoisMulti(word[2], 0x01) ^ galoisMulti(word[3], 0x02)
 
     def doInvMixColumns(self) -> None:
-        pass
+        for i in range(4):
+            word = self.matrix[i].copy()
+            self.matrix[i][0] = galoisMulti(word[0], 0x0e) ^ galoisMulti(word[1], 0x0b) ^ galoisMulti(word[2], 0x0d) ^ galoisMulti(word[3], 0x09)
+            self.matrix[i][1] = galoisMulti(word[0], 0x09) ^ galoisMulti(word[1], 0x0e) ^ galoisMulti(word[2], 0x0b) ^ galoisMulti(word[3], 0x0d)
+            self.matrix[i][2] = galoisMulti(word[0], 0x0d) ^ galoisMulti(word[1], 0x09) ^ galoisMulti(word[2], 0x0e) ^ galoisMulti(word[3], 0x0b)
+            self.matrix[i][3] = galoisMulti(word[0], 0x0b) ^ galoisMulti(word[1], 0x0d) ^ galoisMulti(word[2], 0x09) ^ galoisMulti(word[3], 0x0e)
 
     def doAddRoundKey(self, key: 'Matrix') -> None:
-        self ^= key
-
-    def doInvAddRoundKey(self, key: 'Matrix') -> None:
         self ^= key
 
     def hex(self):
@@ -163,14 +165,19 @@ class Matrix:
             str += self.matrix[i].hex()
         return str
 
+def galoisMulti(value, multiplicator):
+    """
+    Multiplication in the Galois field GF(2^8).
+    """
+    ret = 0
+    bitSet = 0
 
-def doMulti(value, exp) -> int:
-    if (exp == 1):
-        return value
-    ret = (value << 1) & 0xFF
-    if (exp == 2):
-        if (value >= 128):
-            ret ^= 0x1B
-        return ret
-    if (exp == 3):
-        return doMulti(value, 2) ^ value
+    for i in range(8):
+        if (multiplicator & 1 == 1):
+            ret ^= value
+        bitSet = value & 0x80
+        value <<= 1
+        if (bitSet == 0x80):
+            value ^= 0x1b
+        multiplicator >>= 1
+    return (ret % 256)

@@ -1,7 +1,7 @@
 from src.args import Args, Algorithm, Mode
 from src.xor import xor
-from src.aes.encrypt import encrypt as aesEncrypt
-from src.aes.decrypt import decrypt as aesDecrypt
+from src.aes.logic import encrypt as aesEncrypt
+from src.aes.logic import decrypt as aesDecrypt
 from src.rsa.logic import encrypt as rsaEncrypt
 from src.rsa.logic import decrypt as rsaDecrypt
 

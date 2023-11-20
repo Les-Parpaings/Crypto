@@ -21,3 +21,22 @@ def encrypt(message: bytes, args: Args) -> str:
     matrix.doAddRoundKey(allKeys[10])
 
     return matrix.hex()
+
+def decrypt(message, args) -> str:
+    allKeys = genereateAllKeys(bytes.fromhex(args.key))
+
+    matrix = Matrix()
+    matrix.setValues(message)
+    matrix.doAddRoundKey(allKeys[10])
+
+    for i in range(1, 10):
+        matrix.doInvShiftRows()
+        matrix.doInvSubBytes()
+        matrix.doAddRoundKey(allKeys[10 - i])
+        matrix.doInvMixColumns()
+
+    matrix.doInvShiftRows()
+    matrix.doInvSubBytes()
+    matrix.doAddRoundKey(allKeys[0])
+
+    return matrix.hex()
