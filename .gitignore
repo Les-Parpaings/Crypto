@@ -2,13 +2,16 @@
 .vscode
 
 # Caca
+_backup/
+backup/
 ciphered
 message
 messageBS
+messageInconnu
 key
 
 # Python
 *.pyc
 
-test.py
+_test.py
 _oui.py

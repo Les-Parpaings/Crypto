@@ -582,11 +582,13 @@ RSBOX = [
 ]
 
 
+# 110101        11
+#   1111        0101
+
 def lookupSBox(byte):
     x = byte >> 4
     y = byte & 15
     return SBOX[x][y]
-
 
 def lookupReverseSBox(byte):
     x = byte >> 4

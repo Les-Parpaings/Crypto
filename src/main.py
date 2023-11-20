@@ -1,10 +1,9 @@
 from src.args import Args, Algorithm, Mode
 from src.xor import xor
-from src.aes.logic import encrypt as aesEncrypt
-from src.aes.logic import encrypt as aesDecrypt
+from src.aes.encrypt import encrypt as aesEncrypt
+from src.aes.decrypt import decrypt as aesDecrypt
 from src.rsa.logic import encrypt as rsaEncrypt
 from src.rsa.logic import decrypt as rsaDecrypt
-from src.aes.key import Key, genereateAllKeys
 
 def main():
     args = Args()
@@ -29,3 +28,4 @@ def main():
         message = functionTableEncrypt[args.algo.value](message, args)
     else:
         message = functionTableDecrypt[args.algo.value](message, args)
+    print(message)
