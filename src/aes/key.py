@@ -10,6 +10,10 @@ def getValueFromLastWord(word: Word, RCon: Word) -> Word:
     return wordRCon
 
 def genereateAllKeys(keyOriginal: bytes) -> list[Matrix]:
+
+    if (len(keyOriginal) != 16):
+        raise("key size is different from 16 bytes")
+
     RCon = getRCon()
 
     allKeys = [Matrix() for i in range(11)]

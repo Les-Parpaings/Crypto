@@ -20,7 +20,7 @@ def main():
 
     message = ""
     if (args.mode != Mode.GEN_RSA_KEY):
-        message = bytes.fromhex(input())
+        message = input()
 
     functionTableEncrypt = [xor, rsaEncrypt, aesEncrypt]
     functionTableDecrypt = [xor, rsaDecrypt, aesDecrypt]
